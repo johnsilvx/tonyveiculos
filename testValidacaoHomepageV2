@@ -1,0 +1,38 @@
+//código versão 2 - refratorado
+package tony.veiculos;
+
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import metodos.MetodosDeTestes;
+
+// ÉPICO VALIDAÇÃO DA HOMEPAGE
+public class ValidacaoHomepage {
+
+	MetodosDeTestes metodos = new MetodosDeTestes();
+
+	@Before // ABRIR & MAXIMIZAR NAVEGADOR
+	public void setUp() throws Exception {
+		metodos.abrirNavegador("https://tonyveiculos.com.br/");
+	}
+
+	@After // FECHAR NAVEGADOR
+	public void tearDown() throws Exception {
+		metodos.fecharNavegador();
+	}
+
+	// STORY LINK HEADER
+	// FUNCIONACILADADE Validar Links do Cabeçalho
+	// COMO cliente
+	// QUERO clicar nos botões do menu
+	// PARA ter acesso as páginas
+
+	@Test
+	public void validacaoPage() {
+		assertTrue(metodos.validarURL("https://tonyveiculos.com.br/"));
+	}
+
+}
