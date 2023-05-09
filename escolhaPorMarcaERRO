@@ -1,0 +1,70 @@
+package escolhaPorMarca;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.junit.Assert.assertEquals;
+
+import java.time.Duration;
+import java.util.Set;
+
+public class Validacao {
+
+    WebDriver driver;
+
+    @Before
+    public void setUp() throws Exception {
+
+        System.setProperty("webdriver.chrome.driver", "./Driver/chromedriver.exe");
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://tonyveiculos.com.br/");
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        driver.quit();
+    }
+
+    @Test
+    public void testBMW() throws InterruptedException {
+
+        // Obter o nome da janela princial
+        String home = driver.getWindowHandle();
+        WebElement bmwImageLink = driver.findElement(By.xpath("//*[@id=\"carouselMarcas\"]/div/div[1]/div/div[1]/a/div"));
+
+        // Aguarda o elemento ficar clicável
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(bmwImageLink));
+        bmwImageLink.click();
+
+        Set<String> tabs = driver.getWindowHandles();
+
+        // Percorrer as janelas abertas e selecionar a nova janela
+        for (String janela : tabs) {
+            if (!janela.equals(home)) {
+                // trocamos de janela com o código abaixo
+                driver.switchTo().window(janela);
+            }
+        }
+
+        // Verifica se a URL é a esperada
+        String urlAtual = driver.getCurrentUrl();
+        String urlEsperada = "https://tonyveiculos.com.br/Estoque/?marca=19";
+        assertEquals(urlEsperada, urlAtual);
+
+        // Volta para a janela principal
+        driver.switchTo().window(home);
+    }
+}
+
+#mensagem de erro
+
+org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="carouselMarcas"]/div/div[1]/div/div[1]/a/div"}
