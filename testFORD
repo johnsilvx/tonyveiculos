@@ -1,0 +1,63 @@
+package escolhaPorMarca;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import java.util.Set;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Validacao {
+
+	WebDriver driver;
+	WebDriverWait wait;
+
+	@Before
+	public void setUp() throws Exception {
+		System.setProperty("webdriver.chrome.driver", "./Driver/chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://tonyveiculos.com.br/");
+
+		RolarPage rolarPage = new RolarPage(driver);
+		rolarPage.scroll();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+
+	}
+
+	@Test
+	public void testFord() throws InterruptedException {
+
+		Thread.sleep(500);
+
+		// clica na seta direita uma vez
+		WebElement seta = driver.findElement(By.xpath("//*[@id=\"marcasCarrosel\"]/div/div[2]/div[3]/a"));
+		seta.click();
+
+		Thread.sleep(500);
+
+		// clica na imagem ford
+		driver.findElement(By.xpath("//*[@id=\"carouselMarcas\"]/div/div[2]/div/div[2]/a/img")).click();
+
+		// Obter as alças (handles) das janelas/abas
+		Set<String> handles = driver.getWindowHandles();
+		String primeiraAba = driver.getWindowHandle();
+		handles.remove(primeiraAba);
+
+		// Mudar para a nova aba
+		String segundaAba = handles.iterator().next();
+		driver.switchTo().window(segundaAba);
+
+		// Validar se o link está funcionando corretamente
+		String urlAtual = driver.getCurrentUrl();
+		assertEquals(urlAtual, "https://tonyveiculos.com.br/Estoque/?marca=68");
+	}
+
+}
