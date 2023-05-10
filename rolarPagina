@@ -1,0 +1,18 @@
+package escolhaPorMarca;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+
+public class RolarPage {
+    
+    private WebDriver driver;
+
+    public RolarPage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    public void scroll() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,800)"); // 0 = horizontal 800 = vertical (nesse caso rolar 800)
+    }
+}
