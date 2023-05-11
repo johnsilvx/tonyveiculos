@@ -13,6 +13,7 @@ public class RolarPage {
 
     public void scroll() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
+        // se quiser rodar ate o footer o valor é 0,3000
         js.executeScript("window.scrollBy(0,800)"); // 0 = horizontal 800 = vertical (nesse caso rolar 800)
     }
 }
