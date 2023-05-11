@@ -32,6 +32,28 @@ public class Validacao {
 	}
 
 	@Test
+	public void testBmw() throws InterruptedException {
+
+		Thread.sleep(500);
+
+		// clica na imagem bmw
+		driver.findElement(By.xpath("//*[@id=\"carouselMarcas\"]/div/div[1]/div/div[1]/a/img")).click();
+
+		// Obter as alças (handles) das janelas/abas
+		Set<String> handles = driver.getWindowHandles();
+		String primeiraAba = driver.getWindowHandle();
+		handles.remove(primeiraAba);
+
+		// Mudar para a nova aba
+		String segundaAba = handles.iterator().next();
+		driver.switchTo().window(segundaAba);
+
+		// Validar se o link está funcionando corretamente
+		String urlAtual = driver.getCurrentUrl();
+		assertEquals(urlAtual, "https://tonyveiculos.com.br/Estoque/?marca=19");
+	}
+
+	@Test
 	public void testFord() throws InterruptedException {
 
 		Thread.sleep(500);
@@ -71,7 +93,7 @@ public class Validacao {
 		seta.click();
 
 		Thread.sleep(500);
-		// clica na imagem ford
+		// clica na imagem jac
 		driver.findElement(By.xpath("//*[@id=\"carouselMarcas\"]/div/div[3]/div/div[2]/a/img")).click();
 
 		// Obter as alças (handles) das janelas/abas
