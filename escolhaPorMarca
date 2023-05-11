@@ -31,3 +31,31 @@ public class Validacao {
 	public void tearDown() throws Exception {
 
 	}
+@Test
+	public void testJac() throws InterruptedException {
+
+		Thread.sleep(500);
+
+		// clica na seta direita DUAS vezes
+		WebElement seta = driver.findElement(By.xpath("//*[@id=\"marcasCarrosel\"]/div/div[2]/div[3]/a"));
+		seta.click();
+		Thread.sleep(1000);
+		seta.click();
+
+		Thread.sleep(500);
+		// clica na imagem ford
+		driver.findElement(By.xpath("//*[@id=\"carouselMarcas\"]/div/div[3]/div/div[2]/a/img")).click();
+
+		// Obter as alças (handles) das janelas/abas
+		Set<String> handles = driver.getWindowHandles();
+		String primeiraAba = driver.getWindowHandle();
+		handles.remove(primeiraAba);
+
+		// Mudar para a nova aba
+		String segundaAba = handles.iterator().next();
+		driver.switchTo().window(segundaAba);
+
+		// Validar se o link está funcionando corretamente
+		String urlAtual = driver.getCurrentUrl();
+		assertEquals(urlAtual, "https://tonyveiculos.com.br/Estoque/?marca=95");
+	}
