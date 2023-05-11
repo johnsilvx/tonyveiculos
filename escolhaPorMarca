@@ -1,0 +1,33 @@
+package escolhaPorMarca;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import java.util.Set;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Validacao {
+
+	WebDriver driver;
+	WebDriverWait wait;
+
+	@Before
+	public void setUp() throws Exception {
+		System.setProperty("webdriver.chrome.driver", "./Driver/chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://tonyveiculos.com.br/");
+
+		RolarPage rolarPage = new RolarPage(driver);
+		rolarPage.scroll();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+
+	}
